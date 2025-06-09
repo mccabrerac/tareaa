@@ -25,11 +25,9 @@ jobs:
     - name: Deploy on DigitalOcean Droplet
       run: |
         ssh -o StrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.HOST }} << 'EOF'
-          if [ ! -d "/root/todo-app" ]; then
-            git clone https://github.com/mccabrerac/tareate.git /root/todo-app
-          fi
-          cd /root/todo-app/todo-app
-          git pull origin main
-          docker compose down
+          rm -rf /root/todo-app
+          git clone https://github.com/mccabrerac/tareaa.git /root/todo-app
+          cd /root/todo-app
+          docker compose down || true
           docker compose up -d --build
         EOF
