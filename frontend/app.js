@@ -1,4 +1,4 @@
-const API_URL = 'http://161.35.126.138:5000/api/todos';
+const API_URL = '/api/todos';
 
 // --- CÓDIGO A AGREGAR AQUÍ ---
 // Importa los módulos de Firebase necesarios
