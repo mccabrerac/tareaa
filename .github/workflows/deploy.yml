@@ -1,0 +1,31 @@
+name: Deploy todo-app with Docker Compose
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup SSH
+      uses: webfactory/ssh-agent@v0.7.0
+      with:
+        ssh-private-key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
+
+    - name: Deploy on DigitalOcean Droplet
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.HOST }} << 'EOF'
+          if [ ! -d "/root/todo-app" ]; then
+            git clone https://github.com/mccabrerac/tareate.git /root/todo-app
+          fi
+          cd /root/todo-app/todo-app
+          git pull origin main
+          docker compose down
+          docker compose up -d --build
+        EOF
