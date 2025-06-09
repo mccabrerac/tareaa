@@ -18,7 +18,10 @@ services:
       - mongo
     environment:
       - NODE_ENV=development
-    
+    volumes:
+      - ./backend:/app
+      - ./backend/todolist-92e56-firebase-adminsdk-fbsvc-e851359006.json:/app/todolist-92e56-firebase-adminsdk-fbsvc-e851359006.json
+
   frontend:
     build: ./frontend
     container_name: frontend
@@ -36,6 +39,6 @@ services:
     volumes:
       - ./auth:/app
     restart: unless-stopped
-    
+
 volumes:
   mongo-data:

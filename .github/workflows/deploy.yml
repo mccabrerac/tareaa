@@ -25,9 +25,13 @@ jobs:
     - name: Deploy on DigitalOcean Droplet
       run: |
         ssh -o StrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.HOST }} << 'EOF'
+          set -e
           rm -rf /root/todo-app
           git clone https://github.com/mccabrerac/tareaa.git /root/todo-app
           cd /root/todo-app
+
+          echo "${{ secrets.FIREBASE_ADMIN_KEY }}" > ./backend/todolist-92e56-firebase-adminsdk-fbsvc-e851359006.json
+
           docker compose down || true
           docker compose up -d --build
         EOF
